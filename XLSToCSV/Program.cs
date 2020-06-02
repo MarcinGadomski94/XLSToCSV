@@ -100,8 +100,8 @@ namespace XLSToCSV
                         csvContent += string.Join(";", arr) + "\n";
                     }
 
-                    var fileName = Path.GetFileName(excelFilePath);
-                    fileName = (ds.Tables[tableCounter].TableName) + "_" + fileName;
+                    var fileName = Path.GetFileNameWithoutExtension(excelFilePath);
+                    fileName = (ds.Tables[tableCounter].TableName) + "_" + fileName + ".csv";
                     var destinationPath = Path.GetDirectoryName(destinationCsvFilePath);
                     destinationCsvFilePath = destinationPath + "/" + fileName;
                     StreamWriter csv = new StreamWriter(destinationCsvFilePath, false);
