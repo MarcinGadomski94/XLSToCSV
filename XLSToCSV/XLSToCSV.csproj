@@ -6,16 +6,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Input"/>
+        <Folder Include="Output" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Output"/>
+        <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+        <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="ExcelDataReader" Version="3.6.0"/>
-        <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0"/>
+      <None Update="Input\Specifikation faktura 150484323.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

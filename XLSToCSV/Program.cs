@@ -42,9 +42,7 @@ namespace XLSToCSV
                 Console.WriteLine($"Processing file ${Path.GetFileName(currentFile)}");
                 var fileName = Path.GetFileNameWithoutExtension(currentFile) + ".csv";
                 var saved = SaveAsCsv(currentFile, $"{Environment.CurrentDirectory}/Output/{fileName}");
-                if (saved)
-                    Console.WriteLine("CSV saved: /Output/" + fileName);
-                else
+                if (!saved)
                     Console.WriteLine($"Couldn't convert {fileName} to CSV");
             }
 
@@ -84,7 +82,9 @@ namespace XLSToCSV
                     int row_no = 0;
                     while (row_no < ds.Tables[tableCounter].Rows.Count)
                     {
-                        Console.WriteLine($"Processing row #{row_no} / {ds.Tables[tableCounter].Rows.Count}");
+                        var percentage = ((double) row_no / (double) ds.Tables[tableCounter].Rows.Count) * 100;
+                        percentage = Math.Round(percentage, 2);
+                        Console.Write($"Processing row #{row_no} / {ds.Tables[tableCounter].Rows.Count} ({percentage}%)\r");
                         var arr = new List<string>();
                         for (int i = 0; i < ds.Tables[tableCounter].Columns.Count; i++)
                         {
@@ -100,13 +100,14 @@ namespace XLSToCSV
                         csvContent += string.Join(";", arr) + "\n";
                     }
 
-                    var fileName = Path.GetFileName(destinationCsvFilePath);
+                    var fileName = Path.GetFileName(excelFilePath);
                     fileName = (ds.Tables[tableCounter].TableName) + "_" + fileName;
                     var destinationPath = Path.GetDirectoryName(destinationCsvFilePath);
                     destinationCsvFilePath = destinationPath + "/" + fileName;
                     StreamWriter csv = new StreamWriter(destinationCsvFilePath, false);
                     csv.Write(csvContent);
                     csv.Close();
+                    Console.WriteLine($"CSV Saved: /Output/{Path.GetFileName(destinationCsvFilePath)}");
                 }
                 
                 return true;
