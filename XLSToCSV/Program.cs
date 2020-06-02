@@ -42,9 +42,7 @@ namespace XLSToCSV
                 Console.WriteLine($"Processing file ${Path.GetFileName(currentFile)}");
                 var fileName = Path.GetFileNameWithoutExtension(currentFile) + ".csv";
                 var saved = SaveAsCsv(currentFile, $"{Environment.CurrentDirectory}/Output/{fileName}");
-                if (saved)
-                    Console.WriteLine("CSV saved: /Output/" + fileName);
-                else
+                if (!saved)
                     Console.WriteLine($"Couldn't convert {fileName} to CSV");
             }
 
@@ -109,6 +107,7 @@ namespace XLSToCSV
                     StreamWriter csv = new StreamWriter(destinationCsvFilePath, false);
                     csv.Write(csvContent);
                     csv.Close();
+                    Console.WriteLine($"CSV Saved: /Output/{Path.GetFileName(destinationCsvFilePath)}");
                 }
                 
                 return true;
